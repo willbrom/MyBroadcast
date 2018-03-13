@@ -33,7 +33,7 @@ public class MyFirebaseJobDispatcher {
                 .setTag(QUOTE_JOB)
                 .setRecurring(true)
                 .setLifetime(Lifetime.FOREVER)
-                .setTrigger(Trigger.executionWindow(60, 600))
+                .setTrigger(Trigger.executionWindow(600, 3600))
                 .setReplaceCurrent(false)
                 .setRetryStrategy(RetryStrategy.DEFAULT_EXPONENTIAL)
                 .setConstraints(Constraint.ON_ANY_NETWORK)
