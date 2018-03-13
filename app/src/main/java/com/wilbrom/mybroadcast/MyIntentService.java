@@ -72,7 +72,7 @@ public class MyIntentService extends IntentService {
 
     private void handleActionGetData(String path, String param2) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-        String s = prefs.getString("key", "No Value");
+        String quotation = prefs.getString("key", "No Value");
         URL url = null;
         try {
             url = new URL(path);
@@ -86,18 +86,20 @@ public class MyIntentService extends IntentService {
             Scanner sc = new Scanner(in);
             sc.useDelimiter("\\A");
             if (sc.hasNext()) {
-                s = sc.next();
+                quotation = sc.next();
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
 
         SharedPreferences.Editor editor = prefs.edit();
-        editor.putString("key", s);
+        editor.putString("key", quotation);
         editor.apply();
 
+        MyNotifications.notify(this, quotation, "Author");
+
         if (mListener != null)
-            mListener.dataChanged(s);
+            mListener.dataChanged(quotation);
     }
 
     private void handleActionBaz(String param1, String param2) {
