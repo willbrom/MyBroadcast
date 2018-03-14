@@ -21,7 +21,8 @@ public class MyNotifications {
                 .setContentTitle(author)
                 .setContentText(quote)
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-                .setContentIntent(createPendingIntent(context));
+                .setContentIntent(createPendingIntent(context))
+                .setAutoCancel(true);
 
         NotificationManagerCompat notificationManagerCompat = NotificationManagerCompat.from(context);
         notificationManagerCompat.notify(NOTIFICATION_ID, mBuilder.build());
