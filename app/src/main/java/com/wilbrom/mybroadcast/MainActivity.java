@@ -43,8 +43,12 @@ public class MainActivity extends AppCompatActivity implements Observer {
         Log.d("TAG", (String) o);
     }
 
-    private void displayQuote(String quote) {
+    private void displayQuote(String rawQuote) {
+        Map<String, String> quoteData = getQuoteData(rawQuote);
+        String quote = quoteData.get((String) "quote");
+        String author = quoteData.get((String) "author");
         ((TextView) findViewById(R.id.textView)).setText(quote);
+        ((TextView) findViewById(R.id.textView2)).setText(author);
     }
 
     private Map<String , String> getQuoteData(String data) {
