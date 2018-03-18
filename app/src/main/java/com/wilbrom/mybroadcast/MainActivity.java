@@ -7,6 +7,11 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -19,7 +24,7 @@ public class MainActivity extends AppCompatActivity implements Observer {
 
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         String s = prefs.getString("key", "No value");
-        ((TextView) findViewById(R.id.textView)).setText(s);
+        displayQuote(s);
 
         MyObservable obs = new MyObservable();
         obs.addObserver(this);
@@ -31,10 +36,34 @@ public class MainActivity extends AppCompatActivity implements Observer {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                ((TextView) findViewById(R.id.textView)).setText((String) obj);
+                displayQuote((String) obj);
             }
         });
 
         Log.d("TAG", (String) o);
+    }
+
+    private void displayQuote(String rawQuote) {
+        Map<String, String> quoteData = getQuoteData(rawQuote);
+        String quote = quoteData.get((String) "quote");
+        String author = quoteData.get((String) "author");
+        ((TextView) findViewById(R.id.textView)).setText(quote);
+        ((TextView) findViewById(R.id.textView2)).setText(author);
+    }
+
+    private Map<String , String> getQuoteData(String data) {
+        Map<String, String> quoteData = new HashMap<>();
+        String quote = null;
+        String author = null;
+        try {
+            JSONObject rootObj = new JSONObject(data);
+            quote = rootObj.getString("quoteText");
+            author = rootObj.getString("quoteAuthor");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        quoteData.put("quote", quote);
+        quoteData.put("author", author);
+        return quoteData;
     }
 }
