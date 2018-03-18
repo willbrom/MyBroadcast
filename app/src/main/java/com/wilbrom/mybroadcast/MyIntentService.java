@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Map;
 import java.util.Observable;
 import java.util.Scanner;
 
@@ -96,7 +97,11 @@ public class MyIntentService extends IntentService {
         editor.putString("key", quotation);
         editor.apply();
 
-        MyNotifications.notify(this, quotation, "Author");
+        Map data = MainActivity.getQuoteData(quotation);
+        String quote = (String) data.get("quote");
+        String author = (String) data.get("author");
+
+        MyNotifications.notify(this, quote, author);
 
         if (mListener != null)
             mListener.dataChanged(quotation);

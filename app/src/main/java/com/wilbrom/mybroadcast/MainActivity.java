@@ -51,7 +51,7 @@ public class MainActivity extends AppCompatActivity implements Observer {
         ((TextView) findViewById(R.id.textView2)).setText(author);
     }
 
-    private Map<String , String> getQuoteData(String data) {
+    public static Map<String , String> getQuoteData(String data) {
         Map<String, String> quoteData = new HashMap<>();
         String quote = null;
         String author = null;
